@@ -130,7 +130,7 @@
 </head>
 <body>
 
-  <video class="bg-video" autoplay muted loop playsinline>
+  <video class="bg-video" autoplay muted loop playsinline preload="auto" id="bgVideo">
     <source src="depositphotos_843538710-stock-video-time-lapse-dark-rain-clouds.mp4" type="video/mp4">
   </video>
   <div class="bg-overlay"></div>
@@ -153,6 +153,11 @@
     const content = document.getElementById('content');
     const enterBtn = document.getElementById('enterBtn');
     const music = document.getElementById('bgMusic');
+
+    const bgVideo = document.getElementById('bgVideo');
+    bgVideo.addEventListener('error', () => {
+      console.error('Background video failed to load. Check that the file name and path match exactly (GitHub Pages is case-sensitive).');
+    });
 
     enterBtn.addEventListener('click', () => {
       music.volume = 0.6;
