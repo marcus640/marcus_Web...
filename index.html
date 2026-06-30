@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #000;
+  }
+
+  /* ===== Background video ===== */
+  .bg-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: -2;
+    filter: brightness(0.55);
+  }
+
+  .bg-overlay {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.65) 100%);
+    z-index: -1;
+  }
+
+  /* ===== Intro screen ===== */
+  #intro {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    transition: opacity 0.8s ease;
+  }
+
+  #intro.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  #enterBtn {
+    padding: 18px 48px;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: pulse 2.5s infinite ease-in-out;
+  }
+
+  #enterBtn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.25); }
+    50% { box-shadow: 0 0 0 14px rgba(255,255,255,0); }
+  }
+
+  /* ===== Main content ===== */
+  #content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  #content.visible {
+    opacity: 1;
+  }
+
+  .avatar {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255,255,255,0.7);
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+    animation: float 4s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .description {
+    margin-top: 24px;
+    max-width: 500px;
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.6;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+  }
+
+  .description span.dots::after {
+    content: '...';
+  }
+</style>
+</head>
+<body>
+
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="depositphotos_843538710-stock-video-time-lapse-dark-rain-clouds.mp4" type="video/mp4">
+  </video>
+  <div class="bg-overlay"></div>
+
+  <div id="intro">
+    <button id="enterBtn">Enter</button>
+  </div>
+
+  <div id="content">
+    <img class="avatar" src="ava.jpg" alt="avatar">
+    <p class="description">hello<span class="dots"></span></p>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="Marino_Im_Sorry_Mom.mp4" type="audio/mp4">
+  </audio>
+
+  <script>
+    const intro = document.getElementById('intro');
+    const content = document.getElementById('content');
+    const enterBtn = document.getElementById('enterBtn');
+    const music = document.getElementById('bgMusic');
+
+    enterBtn.addEventListener('click', () => {
+      music.volume = 0.6;
+      music.play().catch(() => {});
+      intro.classList.add('hidden');
+      content.classList.add('visible');
+    });
+  </script>
+
+</body>
+</html>
